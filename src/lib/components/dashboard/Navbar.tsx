@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 
 function DashNavbar() {
 	return (
@@ -7,7 +6,7 @@ function DashNavbar() {
 			<div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
 				<div className="flex items-center gap-3">
 					<h1 className="text-2xl font-bold text-white drop-shadow-lg">
-						<Link href={"/"}>Advent Calendar</Link>
+						<Link href={"/dashboard"}>Advent Calendar</Link>
 					</h1>
 				</div>
 				<nav className="flex items-center gap-4">

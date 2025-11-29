@@ -1,7 +1,5 @@
 "use client";
-import DashNavbar from "@/lib/components/dashboard/Navbar";
 import { useState } from "react";
-import Snowfall from "react-snowfall";
 
 function CreateCalendar() {
 	const [title, setTitle] = useState<string>("");
@@ -12,10 +10,7 @@ function CreateCalendar() {
 	const [password, setPassword] = useState<string>("");
 
 	return (
-		<div className="min-h-screen bg-sky-500 dark:bg-sky-700 flex flex-col gap-4">
-			<Snowfall />
-			<DashNavbar />
-
+		<>
 			<div className="w-full h-full flex justify-center items-center">
 				<div className="m-16 p-4 bg-sky-600 rounded-xl w-4xl flex flex-col gap-4">
 					<div>
@@ -108,7 +103,7 @@ function CreateCalendar() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 
