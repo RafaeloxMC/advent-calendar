@@ -20,7 +20,9 @@ export function LightChain() {
 						key={light.id}
 						className="relative flex flex-col items-center"
 						style={{
-							transform: `translateY(${light.heightOffset}%)`,
+							transform: `translateY(${
+								Math.round(light.heightOffset * 100) / 100
+							}%)`,
 						}}
 					>
 						<div className="w-1 h-3 bg-gray-800"></div>
