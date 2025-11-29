@@ -3,7 +3,7 @@ import React from "react";
 function InfoCard() {
 	return (
 		<div className="max-w-4xl mx-auto my-8 p-8 bg-sky-600/90 backdrop-blur-sm rounded-xl shadow-xl text-white">
-			<h1 className="text-3xl font-bold mb-6 text-center">
+			<h1 className="text-3xl font-bold mb-6 text-center text-red-100">
 				How it works
 			</h1>
 			<div className="space-y-6 text-lg leading-relaxed">
