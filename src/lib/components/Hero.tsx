@@ -14,9 +14,13 @@ export function Hero() {
 			</h2>
 			<Link
 				href="/handler/signup"
-				className="px-8 py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-xl rounded-full shadow-lg transform transition hover:scale-105 border-2 border-red-300"
+				className="px-12 py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-xl rounded-full shadow-lg transform transition hover:scale-105 border-2 border-red-300"
 			>
 				Get Started
+			</Link>
+			<span>Already have an account? </span>
+			<Link href={"/handler/login"} className="underline">
+				Sign in!
 			</Link>
 		</div>
 	);
