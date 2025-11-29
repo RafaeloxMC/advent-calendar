@@ -1,5 +1,6 @@
 "use client";
 
+import DashNavbar from "@/lib/components/dashboard/Navbar";
 import { useUser } from "@stackframe/stack";
 import { Calendar, Gift, TreePine } from "lucide-react";
 import Link from "next/link";
@@ -25,24 +26,7 @@ function Dashboard() {
 	return (
 		<div className="min-h-screen bg-sky-500 dark:bg-sky-700 flex flex-col relative overflow-hidden">
 			<Snowfall />
-
-			<header className="relative z-10 bg-linear-to-r from-[#c41e3a] via-[#a51830] to-[#c41e3a] shadow-lg">
-				<div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-					<div className="flex items-center gap-3">
-						<h1 className="text-2xl font-bold text-white drop-shadow-lg">
-							<Link href={"/"}>Advent Calendar</Link>
-						</h1>
-					</div>
-					<nav className="flex items-center gap-4">
-						<button className="px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
-							My Calendars
-						</button>
-						<button className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-all">
-							Settings
-						</button>
-					</nav>
-				</div>
-			</header>
+			<DashNavbar />
 
 			<main className="relative z-10 flex-1 max-w-7xl mx-auto w-full px-4 py-8">
 				<section className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8 border border-white/20 shadow-xl">
@@ -59,9 +43,12 @@ function Dashboard() {
 						</div>
 					</div>
 					<div className="flex gap-4 mt-4">
-						<button className="px-6 py-3 bg-linear-to-r bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center gap-2">
+						<Link
+							href="/dashboard/create-calendar"
+							className="px-6 py-3 bg-linear-to-r bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+						>
 							Create New Calendar
-						</button>
+						</Link>
 					</div>
 				</section>
 
