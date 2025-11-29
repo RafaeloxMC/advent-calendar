@@ -13,7 +13,7 @@ export function Hero() {
 				in seconds for free!
 			</h2>
 			<Link
-				href="/handler/signup"
+				href="/dashboard"
 				className="px-12 py-4 bg-red-500 hover:bg-red-600 text-white font-bold text-xl rounded-full shadow-lg transform transition hover:scale-105 border-2 border-red-300"
 			>
 				Get Started
