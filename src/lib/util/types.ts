@@ -6,10 +6,12 @@ export interface ICalendar {
 	title: string;
 	year: number;
 	is_public: boolean;
-	doors: {
-		name: string;
-		content: string;
-	};
+	doors: [
+		{
+			name: string;
+			content: string;
+		}
+	];
 	created_at: Date;
 	updated_at: Date;
 }
