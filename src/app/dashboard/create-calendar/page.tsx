@@ -80,6 +80,7 @@ function CreateCalendar() {
 									placeholder="secret1234!"
 									className="bg-sky-500 px-4 py-2 rounded-full w-full focus:ring-0 focus:outline-0"
 									value={password}
+									type="password"
 									onChange={(e) =>
 										setPassword(e.currentTarget.value)
 									}
@@ -100,8 +101,13 @@ function CreateCalendar() {
 							onClick={async () => {
 								const res = await fetch("/api/calendars/new", {
 									method: "POST",
+									body: JSON.stringify({
+										title,
+										year,
+										password_hash: password ? password : "",
+									}),
 								});
-								console.log("Res");
+								console.log("Res: " + (await res.json()));
 							}}
 						>
 							Create calendar

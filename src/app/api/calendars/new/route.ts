@@ -1,6 +1,7 @@
 import { newCalendar } from "@/lib/util/db";
 import { stackServerApp } from "@/stack/server";
 import { NextRequest, NextResponse } from "next/server";
+import * as argon2 from "argon2";
 
 export async function POST(req: NextRequest) {
 	let body;
@@ -24,6 +25,10 @@ export async function POST(req: NextRequest) {
 	const title = body.title;
 	const year: number = body.year;
 	let password_hash;
+
+	if (body.password_hash) {
+		password_hash = await argon2.hash(body.password_hash);
+	}
 
 	try {
 		const res = await newCalendar(
