@@ -10,9 +10,12 @@ function DashNavbar() {
 					</h1>
 				</div>
 				<nav className="flex items-center gap-4">
-					<button className="px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg">
+					<Link
+						href={"/dashboard"}
+						className="px-4 py-2 bg-green-700 hover:bg-green-800 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg"
+					>
 						My Calendars
-					</button>
+					</Link>
 					<button className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-all">
 						Settings
 					</button>
