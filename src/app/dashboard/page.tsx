@@ -61,9 +61,12 @@ function Dashboard() {
 							Create your first advent calendar to spread holiday
 							joy!
 						</p>
-						<button className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl">
+						<Link
+							href={"/dashboard/create-calendar"}
+							className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl"
+						>
 							Get Started
-						</button>
+						</Link>
 					</div>
 				</div>
 			</section>
