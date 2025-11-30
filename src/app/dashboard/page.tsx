@@ -1,18 +1,30 @@
 "use client";
 
+import { ICalendar } from "@/lib/util/types";
 import { useUser } from "@stackframe/stack";
 import { Calendar, Gift, TreePine } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function Dashboard() {
 	const user = useUser();
 	const router = useRouter();
 
+	const [calendars, setCalendars] = useState<ICalendar[]>([]);
+
 	useEffect(() => {
 		if (!user) router.push("/handler/signup");
 	}, [user, router]);
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const res = await fetch("/api/users/me");
+			const body = await res.json();
+			setCalendars(body.calendars as ICalendar[]);
+		};
+		fetchUser();
+	}, []);
 
 	if (!user)
 		return (
@@ -53,20 +65,48 @@ function Dashboard() {
 				</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					<div className="col-span-full bg-white/5 backdrop-blur-sm rounded-2xl p-12 border-2 border-dashed border-white/20 flex flex-col items-center justify-center text-center">
-						<TreePine />
-						<h3 className="text-xl font-semibold text-white mb-2">
-							No calendars yet
-						</h3>
-						<p className="text-white/60 mb-4">
-							Create your first advent calendar to spread holiday
-							joy!
-						</p>
-						<Link
-							href={"/dashboard/create-calendar"}
-							className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl"
-						>
-							Get Started
-						</Link>
+						{calendars.length > 0 ? (
+							<div className="grid grid-cols-3 gap-4">
+								{calendars.map((cal, idx) => {
+									return (
+										<Link
+											key={idx}
+											className="p-4 border rounded-xl"
+											href={
+												"/dashboard/calendars/" +
+												cal.calendar_id
+											}
+										>
+											<h1>{cal.title}</h1>
+											<p>{cal.calendar_id}</p>
+											<p>
+												Public:{" "}
+												{cal.is_public
+													? "True"
+													: "False"}
+											</p>
+										</Link>
+									);
+								})}
+							</div>
+						) : (
+							<div>
+								<TreePine />
+								<h3 className="text-xl font-semibold text-white mb-2">
+									No calendars yet
+								</h3>
+								<p className="text-white/60 mb-4">
+									Create your first advent calendar to spread
+									holiday joy!
+								</p>
+								<Link
+									href={"/dashboard/create-calendar"}
+									className="px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl"
+								>
+									Get Started
+								</Link>
+							</div>
+						)}
 					</div>
 				</div>
 			</section>

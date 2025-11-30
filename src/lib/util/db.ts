@@ -1,4 +1,5 @@
 import { Pool } from "pg";
+import { ICalendar } from "./types";
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
 const pool = new Pool({
@@ -42,12 +43,28 @@ export async function newCalendar(
 	return pool.query(query, values);
 }
 
-export async function getUserCalendars(ownerId: string) {
-	if (!ownerId) return;
+export async function getUserCalendars(
+	ownerId: string
+): Promise<ICalendar[] | undefined> {
+	if (!ownerId || ownerId.length <= 0) return;
 
 	return pool
 		.query(
 			"SELECT * FROM advent_calendars WHERE owner_id = '" + ownerId + "'"
 		)
 		.then((res) => res.rows);
+}
+
+export async function getCalendarByCalendarId(
+	calendarId: string
+): Promise<ICalendar | undefined> {
+	if (!calendarId || calendarId.length <= 0) return;
+
+	return pool
+		.query(
+			"SELECT * FROM advent_calendars WHERE calendar_id = '" +
+				calendarId +
+				"'"
+		)
+		.then((res) => res.rows[0] as ICalendar);
 }
