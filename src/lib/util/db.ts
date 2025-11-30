@@ -11,7 +11,9 @@ const pool = new Pool({
 });
 
 export async function selectAll() {
-	return pool.query("SELECT * FROM neon_auth.users_sync");
+	return pool
+		.query("SELECT * FROM neon_auth.users_sync")
+		.then((res) => res.rows);
 }
 
 export async function newCalendar(
@@ -38,4 +40,14 @@ export async function newCalendar(
 	)}) VALUES (${placeholders})`;
 
 	return pool.query(query, values);
+}
+
+export async function getUserCalendars(ownerId: string) {
+	if (!ownerId) return;
+
+	return pool
+		.query(
+			"SELECT * FROM advent_calendars WHERE owner_id = '" + ownerId + "'"
+		)
+		.then((res) => res.rows);
 }
