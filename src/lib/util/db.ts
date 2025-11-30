@@ -1,20 +1,24 @@
-import postgres, { Sql } from "postgres";
-
+import { Pool, PoolClient } from "pg";
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
-interface SQLQ extends Sql {
-	query(qry: string): void;
-}
+let client: PoolClient | undefined;
 
-const conn = postgres({
+const pool = new Pool({
 	host: PGHOST,
 	database: PGDATABASE,
-	username: PGUSER,
+	user: PGUSER,
 	password: PGPASSWORD,
 	port: 5432,
-	ssl: "require",
+	ssl: true,
 });
 
-export function selectAll() {
-	return (conn as SQLQ).query("SELECT * FROM neon_auth.users_sync");
+async function conn() {
+	if (client) return client;
+	client = await pool.connect();
+	return client;
+}
+
+export async function selectAll() {
+	await conn();
+	return pool.query("SELECT * FROM neon_auth.users_sync");
 }
