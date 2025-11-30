@@ -32,8 +32,8 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 			<Snowfall />
 
 			{calendar ? (
-				<div>
-					<h1>Calendar {calendar?.calendar_id}</h1>
+				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20 shadow-xl text-center mx-auto">
+					<h1 className="mb-4">{calendar?.title}</h1>
 					<ol className="list-decimal">
 						{calendar?.doors.map((door, idx) => {
 							console.log(idx, door);
@@ -46,7 +46,7 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 					</ol>
 				</div>
 			) : (
-				<div>
+				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20 shadow-xl text-center max-w-md mx-auto">
 					<h1>{header}</h1>
 					{passwordRequired && (
 						<div className="flex flex-col gap-4">
@@ -78,7 +78,7 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 									setCalendar(body.calendar);
 								}}
 							>
-								Create calendar
+								Unlock calendar
 							</button>
 						</div>
 					)}
