@@ -68,3 +68,23 @@ export async function getCalendarByCalendarId(
 		)
 		.then((res) => res.rows[0] as ICalendar);
 }
+
+export async function updateCalendarDoors(
+	calendarId: string,
+	doors: { name: string; content: string }[]
+): Promise<ICalendar | undefined> {
+	if (!calendarId || calendarId.length <= 0) return;
+
+	const doorsJsonbArray = doors.map((door) => JSON.stringify(door));
+
+	const query = `
+		UPDATE advent_calendars 
+		SET doors = ARRAY(SELECT jsonb(unnest($1::text[]))), updated_at = NOW() 
+		WHERE calendar_id = $2 
+		RETURNING *
+	`;
+
+	return pool
+		.query(query, [doorsJsonbArray, calendarId])
+		.then((res) => res.rows[0] as ICalendar);
+}
