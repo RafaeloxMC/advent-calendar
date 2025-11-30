@@ -1,6 +1,7 @@
 "use client";
 import LightChain from "@/lib/components/LightChain";
 import { ICalendar } from "@/lib/util/types";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import Snowfall from "react-snowfall";
 
@@ -11,6 +12,8 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 	const [password, setPassword] = useState<string>("");
 	const [header, setHeader] = useState<string>("Loading Your Calendar...");
 	const passwordFieldRef = useRef<HTMLInputElement>(null);
+
+	const [selected, setSelected] = useState<number>(0);
 
 	useEffect(() => {
 		const fetchCalendar = async () => {
@@ -32,18 +35,80 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 			<Snowfall />
 
 			{calendar ? (
-				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20 shadow-xl text-center mx-auto">
-					<h1 className="mb-4">{calendar?.title}</h1>
-					<ol className="list-decimal">
-						{calendar?.doors.map((door, idx) => {
-							console.log(idx, door);
-							return (
-								<li key={idx}>
-									{idx + 1}: {door.name} - {door.content}
-								</li>
-							);
-						})}
-					</ol>
+				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20 shadow-xl text-center mx-auto max-w-[95%]">
+					{selected != 0 ? (
+						<div>
+							<h1 className="mb-4">
+								{calendar?.title} - Day {selected}
+							</h1>
+							<div className="">
+								<p className="max-w-prose whitespace-pre-wrap wrap-break-word">
+									{calendar.doors[selected - 1].content
+										? calendar.doors[selected - 1].content
+												.split(/(https?:\/\/[^\s]+)/g)
+												.map((part, i) =>
+													part.match(
+														/^https?:\/\//
+													) ? (
+														<a
+															key={i}
+															href={part}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="text-blue-200 hover:text-blue-100 underline"
+														>
+															{
+																new URL(part)
+																	.hostname
+															}
+														</a>
+													) : (
+														part
+													)
+												)
+										: "Nooo! There is no content behind this door :c"}
+								</p>
+								<p className="mt-4">
+									Go{" "}
+									<span
+										onClick={() => setSelected(0)}
+										className="cursor-pointer underline"
+									>
+										back
+									</span>
+								</p>
+							</div>
+						</div>
+					) : (
+						<div>
+							<h1 className="mb-4">{calendar?.title}</h1>
+							<div className="grid grid-cols-6 gap-4">
+								{calendar?.doors.map((door, idx) => {
+									console.log(idx, door);
+									return (
+										<div
+											key={idx + 1}
+											className={`aspect-square rounded-xl p-4 border border-white/20 ${
+												new Date().getDay() > idx + 1
+													? "bg-white/10"
+													: "bg-white/1"
+											} hover:scale-105 hover:bg-white/20 transition-all cursor-pointer`}
+											onClick={() => {
+												if (
+													new Date().getDay() <
+													idx + 1
+												) {
+													setSelected(idx + 1);
+												}
+											}}
+										>
+											<h1>{idx + 1}</h1>
+										</div>
+									);
+								})}
+							</div>
+						</div>
+					)}
 				</div>
 			) : (
 				<div className="bg-white/10 backdrop-blur-sm rounded-2xl p-12 border border-white/20 shadow-xl text-center max-w-md mx-auto">
@@ -84,6 +149,12 @@ function CalendarPage({ params }: { params: Promise<{ id: string }> }) {
 					)}
 				</div>
 			)}
+			<span className="mt-2">
+				Go{" "}
+				<Link href={"/"} className="underline">
+					home
+				</Link>
+			</span>
 		</div>
 	);
 }

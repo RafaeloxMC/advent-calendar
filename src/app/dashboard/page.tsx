@@ -69,23 +69,44 @@ function Dashboard() {
 							<div className="grid grid-cols-3 gap-4">
 								{calendars.map((cal, idx) => {
 									return (
-										<Link
+										<div
 											key={idx}
-											className="p-4 border rounded-xl"
-											href={
-												"/dashboard/calendars/" +
-												cal.calendar_id
-											}
+											className="p-4 border border-white/20 bg-white/5 rounded-xl flex flex-col"
 										>
 											<h1>{cal.title}</h1>
-											<p>{cal.calendar_id}</p>
-											<p>
-												Public:{" "}
-												{cal.is_public
-													? "True"
-													: "False"}
+											<p className="text-white/80">
+												December {cal.year}
 											</p>
-										</Link>
+											<p className="text-white/80">
+												{cal.is_public
+													? "Public"
+													: cal.password_hash &&
+													  cal.password_hash.length >
+															0
+													? "Password-protected"
+													: "Anyone with the link can view"}
+											</p>
+											<div className="flex flex-row gap-2 mt-auto pt-4">
+												<Link
+													href={
+														"/dashboard/calendars/" +
+														cal.calendar_id
+													}
+													className="w-full px-4 py-2 bg-sky-600 rounded-xl hover:scale-105 hover:bg-sky-700 transition-all"
+												>
+													Edit
+												</Link>
+												<Link
+													href={
+														"/calendars/" +
+														cal.calendar_id
+													}
+													className="w-full px-4 py-2 bg-sky-600 rounded-xl hover:scale-105 hover:bg-sky-700 transition-all"
+												>
+													Preview
+												</Link>
+											</div>
+										</div>
 									);
 								})}
 							</div>
