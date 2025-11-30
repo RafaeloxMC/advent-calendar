@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import Snowfall from "react-snowfall";
 import DashNavbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function DashboardLayout({
 	children,
@@ -18,6 +19,7 @@ export default function DashboardLayout({
 			{snowfall}
 			<DashNavbar />
 			{children}
+			<Footer />
 		</div>
 	);
 }
