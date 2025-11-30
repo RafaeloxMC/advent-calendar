@@ -88,7 +88,7 @@ function CreateCalendar() {
 						)}
 
 						<button
-							className={`bg-sky-500 px-4 py-2 rounded-full w-full shadow ${
+							className={`bg-sky-500 px-4 py-2 rounded-full w-full focus:ring-0 focus:outline-0 shadow ${
 								title &&
 								year &&
 								privacy &&
@@ -97,6 +97,12 @@ function CreateCalendar() {
 									? "cursor-pointer"
 									: "cursor-not-allowed"
 							}`}
+							onClick={async () => {
+								const res = await fetch("/api/calendars/new", {
+									method: "POST",
+								});
+								console.log("Res");
+							}}
 						>
 							Create calendar
 						</button>
