@@ -16,9 +16,6 @@ function DashNavbar() {
 					>
 						My Calendars
 					</Link>
-					<button className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-all">
-						Settings
-					</button>
 				</nav>
 			</div>
 		</header>
